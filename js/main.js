@@ -37,6 +37,9 @@ const kittenData_3 = {
 
 const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
 
+kittenDataList.push(newKittenDataObject);
+
+
 //Funciones
 function renderKitten(kittenData) {
     const kitten = `<li class="card">
@@ -82,9 +85,16 @@ function handleClickNewCatForm(event) {
 //Adicionar nuevo gatito
 function addNewKitten(event) {
     event.preventDefault();
-    const valueDesc = inputDesc.value;
+    const newKittenDataObject = {
+         valueDesc: 'inputDesc.value',
+         valuePhoto: 'inputPhoto.value',
+         valueName: 'inputName.value',
+    }
+    
+
+    /*const valueDesc = inputDesc.value;
     const valuePhoto = inputPhoto.value;
-    const valueName = inputName.value;
+    const valueName = inputName.value;*/
     if (valueDesc === "" && valuePhoto === "" && valueName === "") {
         labelMesageError.innerHTML = "Debe rellenar todos los valores";
     } else {
@@ -92,6 +102,7 @@ function addNewKitten(event) {
             labelMesageError.innerHTML = "";
         }
     }
+
 }
 //Cancelar la búsqueda de un gatito
 function cancelNewKitten(event) {
@@ -116,6 +127,7 @@ function filterKitten(event) {
 
 //Mostrar el litado de gatitos en ell HTML
 renderKittenList(kittenDataList);
+
 
 //Eventos
 linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
