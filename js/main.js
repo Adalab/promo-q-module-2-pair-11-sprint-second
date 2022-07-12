@@ -13,6 +13,8 @@ const inputName = document.querySelector('.js-input-name');
 const linkNewFormElememt = document.querySelector('.js-button-new-form');
 const labelMesageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
+const inputRace = document.querySelector('.js-input-race');
+
 
 
 //Objetos con cada gatito
@@ -35,9 +37,10 @@ const kittenData_3 = {
     race: "British Shorthair",
 };
 
+
+
 const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
 
-kittenDataList.push(newKittenDataObject);
 
 
 //Funciones
@@ -82,28 +85,35 @@ function handleClickNewCatForm(event) {
         hideNewCatForm();
     }
 }
+
+
+
 //Adicionar nuevo gatito
 function addNewKitten(event) {
     event.preventDefault();
-    const newKittenDataObject = {
-         valueDesc: 'inputDesc.value',
-         valuePhoto: 'inputPhoto.value',
-         valueName: 'inputName.value',
-    }
-    
 
-    /*const valueDesc = inputDesc.value;
+    const newKittenDataObject   = {
+      desc: inputDesc.value,
+        image: inputPhoto.value,
+        name: inputName.value,
+        race: inputRace.value
+   }
+  
+     const valueDesc = inputDesc.value;
     const valuePhoto = inputPhoto.value;
-    const valueName = inputName.value;*/
+    const valueName = inputName.value; 
     if (valueDesc === "" && valuePhoto === "" && valueName === "") {
         labelMesageError.innerHTML = "Debe rellenar todos los valores";
     } else {
         if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
-            labelMesageError.innerHTML = "";
+            labelMesageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
+            
         }
-    }
+    } kittenDataList.push(newKittenDataObject);
+    renderKittenList(kittenDataList);
 
-}
+   
+}   
 //Cancelar la búsqueda de un gatito
 function cancelNewKitten(event) {
     event.preventDefault();
@@ -118,16 +128,24 @@ function filterKitten(event) {
     event.preventDefault();
     const descrSearchText = input_search_desc.value;
     listElement.innerHTML = "";
-    for (const kittenItem of kittenDataList) {
-        if (kittenItem.desc.includes(descrSearchText)) {
+
+    const kittenListFiltered = kittenDataList.filter(oneCat=> oneCat.toLowerCase().includes(valueDesc.toLowerCase())
+
+    );
+   
+    console.log(kittenListFiltered );
+
+
+/* 
+     for (const kittenItem of kittenDataList) {
+        if (kittenItem.race.includes(descrSearchText)) {
             listElement.innerHTML += renderKitten(kittenItem);
         }
-    }
+    } */
 }
 
 //Mostrar el litado de gatitos en ell HTML
 renderKittenList(kittenDataList);
-
 
 //Eventos
 linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
