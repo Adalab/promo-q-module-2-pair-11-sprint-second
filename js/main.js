@@ -14,6 +14,8 @@ const linkNewFormElememt = document.querySelector('.js-button-new-form');
 const labelMesageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
 const inputRace = document.querySelector('.js-input-race');
+const GITHUB_USER = 'tu_usuario_de_github_aqui';
+const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
 
 
 
@@ -37,9 +39,25 @@ const kittenData_3 = {
     race: "British Shorthair",
 };
 
+// Obtener listado de gatitos desde el servidor
+
+let kittenDataList = [];
+
+fetch('https://adalab-api.herokuapp.com/api/kittens/tuusuariodegithub', {
+    image: 'kittenDataList.url',
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  }).then((response) => response.json())
+  .then ((data) => {
+    console.log(data);
+ kittenDataList = data.results
+ renderKittenList(kittenDataList) 
+  })
+
+  .catch((error) => console.log(`Ha sucedido un error: ${error}`))
 
 
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
+  //Completa el código;
 
 
 
@@ -129,11 +147,12 @@ function filterKitten(event) {
     const descrSearchText = input_search_desc.value;
     listElement.innerHTML = "";
 
-    const kittenListFiltered = kittenDataList.filter(oneCat=> oneCat.toLowerCase().includes(valueDesc.toLowerCase())
+    const kittenListFiltered = kittenDataList.filter(oneCat=> oneCat.desc.toLowerCase().includes(descrSearchText.toLowerCase())
 
     );
    
     console.log(kittenListFiltered );
+    renderKittenList(kittenListFiltered);
 
 
 /* 
