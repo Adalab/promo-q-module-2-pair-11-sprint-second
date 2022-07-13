@@ -43,7 +43,7 @@ const kittenData_3 = {
 
 let kittenDataList = [];
 
-fetch('https://adalab-api.herokuapp.com/api/kittens/tuusuariodegithub', {
+/* fetch('https://adalab-api.herokuapp.com/api/kittens/tuusuariodegithub', {
     image: 'kittenDataList.url',
     method: 'GET',
     headers: {'Content-Type': 'application/json'},
@@ -54,11 +54,30 @@ fetch('https://adalab-api.herokuapp.com/api/kittens/tuusuariodegithub', {
  renderKittenList(kittenDataList) 
   })
 
-  .catch((error) => console.log(`Ha sucedido un error: ${error}`))
+  .catch((error) => console.log(`Ha sucedido un error: ${error}`)) */
 
 
-  //Completa el código;
+//local storage//
+const kittenListStored = JSON.parse(localStorage.getItem('kittenDataList'));
+console.log(kittenListStored);
 
+if( kittenListStored )
+{ renderKitten(kittenListStored) }  
+else{ 
+
+    fetch('https://adalab-api.herokuapp.com/api/kittens/tuusuariodegithub', {
+        image: 'kittenDataList.url',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+      }) 
+      .then((response) => response.json())
+      .then ((data) => {
+        console.log(data);
+     kittenDataList = data.results
+     renderKittenList(kittenDataList) 
+
+      })}
+           
 
 
 //Funciones
@@ -109,6 +128,7 @@ function handleClickNewCatForm(event) {
 //Adicionar nuevo gatito
 function addNewKitten(event) {
     event.preventDefault();
+    
 
     const newKittenDataObject   = {
       desc: inputDesc.value,
