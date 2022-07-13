@@ -67,7 +67,7 @@ function renderKitten(kittenData) {
     <article>
       <img
         class="card_img"
-        src=${kittenData.image}
+        src=${kittenData.url}
         alt="gatito"
       />
       <h3 class="card_title">${kittenData.name}</h3>
@@ -112,10 +112,13 @@ function addNewKitten(event) {
 
     const newKittenDataObject   = {
       desc: inputDesc.value,
-        image: inputPhoto.value,
-        name: inputName.value,
-        race: inputRace.value
+      name: inputName.value,
+        race: inputRace.value,
+        url: inputPhoto.value,
+        
+        
    }
+   console.log(newKittenDataObject);
   
      const valueDesc = inputDesc.value;
     const valuePhoto = inputPhoto.value;
