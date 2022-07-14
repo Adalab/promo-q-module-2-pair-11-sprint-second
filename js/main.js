@@ -14,7 +14,7 @@ const linkNewFormElememt = document.querySelector('.js-button-new-form');
 const labelMesageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
 const inputRace = document.querySelector('.js-input-race');
-const GITHUB_USER = 'tu_usuario_de_github_aqui';
+const GITHUB_USER = 'cristinah.sansaloni';
 const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
 
 
@@ -86,7 +86,7 @@ function renderKitten(kittenData) {
     <article>
       <img
         class="card_img"
-        src=${kittenData.url}
+        src=${kittenData.image}
         alt="gatito"
       />
       <h3 class="card_title">${kittenData.name}</h3>
@@ -134,13 +134,13 @@ function addNewKitten(event) {
       desc: inputDesc.value,
       name: inputName.value,
         race: inputRace.value,
-        url: inputPhoto.value,
+        image: inputPhoto.value,
         
         
    }
    console.log(newKittenDataObject);
   
-     const valueDesc = inputDesc.value;
+    const valueDesc = inputDesc.value;
     const valuePhoto = inputPhoto.value;
     const valueName = inputName.value; 
     if (valueDesc === "" && valuePhoto === "" && valueName === "") {
@@ -148,10 +148,27 @@ function addNewKitten(event) {
     } else {
         if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
             labelMesageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
-            
+            fetch(`https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`, {
+             method: 'POST',
+             headers: {'Content-Type': 'application/json'},
+             body: JSON.stringify(newKittenDataObject),
+})
+    .then((response) => response.json())
+  .then((data) => {
+    if (data.success) {
+        kittenDataList.push(newKittenDataObject);
+        renderKittenList(kittenDataList);
+      //Completa y/o modifica el código:
+      //Agrega el nuevo gatito al listado
+      //Guarda el listado actualizado en el local stoarge
+      //Visualiza nuevamente el listado de gatitos
+      //Limpia los valores de cada input
+    } else {
+      console.log('Ha habido un error');
+    }
+  });
         }
-    } kittenDataList.push(newKittenDataObject);
-    renderKittenList(kittenDataList);
+    }
 
    
 }   
